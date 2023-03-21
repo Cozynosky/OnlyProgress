@@ -1,0 +1,1 @@
+web: gunicorn OnlyProgress.wsgi --log-file -
