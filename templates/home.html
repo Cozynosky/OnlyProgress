@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} OnlyProgress - Home {% endblock %}
+{% block nav %}
+<nav class="navbar navbar-expand-lg fixed-top bg-white bg-opacity-75">
+    <div class="container">
+      <a class="navbar-brand mb-0 h1 text-tertiary fw-bolder" href="#">OnlyProgress</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav fw-bold">
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#"><i class="fa-solid fa-key me-2"></i>Login</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#"><i class="fa-solid fa-pen-to-square me-2"></i>Register</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#"><i class="fa-solid fa-user me-2"></i>Account</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a> 
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<div id="home" class="container">
+  <div class="text-white row">
+    <img src="{% static 'images/bghome.png' %}" alt="My image">
+    <div class="col-lg-6">
+      <h1>Welcomedadsa<br><br></h1>
+    </div>
+    <div class="col">
+      
+    </div>
+  </div>
+</div>
+<div class="container" id="features">
+  <div class="row">
+    <div class="col-lg-4">
+      <i class="fa-solid fa-key fa-2xl bg-secondary rounded-circle p-3"></i>
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="col-lg-4">
+      <i class="fa-solid fa-key fa-2xl bg-secondary rounded-circle p-3"></i>
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="col-lg-4">
+      <i class="fa-solid fa-key fa-2xl bg-secondary rounded-circle p-3"></i>
+      <h3></h3>
+      <p></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
