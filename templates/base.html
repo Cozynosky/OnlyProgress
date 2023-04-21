@@ -12,29 +12,31 @@
         <script src="https://kit.fontawesome.com/2f66aa9ee1.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     </head>
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column min-vh-100">
         <main class="flex-shrink-0">
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container px-5">
-                    <a class="navbar-brand" href="{% url 'home' %}">Only Progress</a>
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="d-flex px-4 w-100">
+                    <a class="navbar-brand" href="{% url 'home' %}">OnlyProgress</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
-                            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
-                            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
+                            {% if not user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account:login_user' %}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'account:register_user' %}">Register</a></li>
+                            {% else %}
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    {% if not user.is_authenticated %}
-                                    <li><a class="dropdown-item" href="#">Login</a></li>
-                                    <li><a class="dropdown-item" href="#">Register</a></li>
-                                    {% else %}
-                                    <li><a class="dropdown-item" href="#">Logout</a></li>
-                                    {% endif %}
-                                </ul>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'account:dashboard' %}">Dashboard</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'account:logout_user' %}">Logout</a>
+                                </div>
                             </li>
+                                {% if request.resolver_match.url_name != 'home'%}
+                                <li class="nav-item nav-link d-md-none"><i class="fa-solid fa-bars" id="sidebarToggle"></i></li>
+                                {% endif %}
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -42,7 +44,7 @@
             {% block content %}{% endblock %}
         </main>
         <!-- Footer-->
-        <footer class="bg-dark py-4 mt-auto">
+        <footer class="bg-dark py-4 mt-auto z-3">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Only Progress 2023</div></div>
@@ -51,7 +53,7 @@
                         <span class="text-white mx-1">&middot;</span>
                         <a class="link-light small" href="#!">Terms</a>
                         <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="{% url 'contact' %}">Contact</a>
+                        <a class="link-light small" href="#">Contact</a>
                     </div>
                 </div>
             </div>
