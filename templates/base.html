@@ -22,16 +22,16 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             {% if not user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'account:login_user' %}">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'account:register_user' %}">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'profile:login_user' %}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'profile:register_user' %}">Register</a></li>
                             {% else %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, {{user.username}}<i class="fa-solid fa-user ps-2
                                     "></i></a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'account:dashboard' %}">Dashboard</a>
+                                    <a class="dropdown-item" href="{% url 'profile:dashboard' %}">Dashboard</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{% url 'account:logout_user' %}">Logout</a>
+                                    <a class="dropdown-item" href="{% url 'profile:logout_user' %}">Logout</a>
                                 </div>
                             </li>
                                 {% if request.resolver_match.url_name != 'home'%}

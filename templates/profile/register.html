@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 {% block content %}
 <section class="py-5">
     <div class="container px-5">
         <!-- Contact form-->
         <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
             <div class="text-center mb-5">
-                <i class="fa-regular fa-envelope fa-2xl bg-primary bg-gradient text-white rounded-3 mb-3 p-4"></i>
-                <h1 class="fw-bolder">Login to your Account </h1>
+                <i class="fa-regular fa-user fa-2xl bg-primary bg-gradient text-white rounded-3 mb-3 p-4"></i>
+                <h1 class="fw-bolder">Create an Account</h1>
                 <p class="lead fw-normal text-muted mb-0">Make your first move in making progress</p>
             </div>
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     {% include 'form.html' %}
-                    <p class="mb-0 mt-3 text-center">If you don't have an acconunt, <a href="{% url 'account:register_user' %}">register</a> a new one</p>
+                    <p class="mb-0 mt-3 text-center">If you already have an acconunt, <a href="{% url 'profile:login_user' %}">login</a> instead</p>
                 </div>
             </div>
         </div>
