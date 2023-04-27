@@ -6,13 +6,13 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light text-center">Start</div>
         <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Summary</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Body</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'profile:dashboard_home' %}">Home</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'profile:dashboard_bodystats' %}">Body Stats</a>
         </div>
     </div>
     <!-- Page content wrapper-->
-    <div id="page-content-wrapper">
-        
+    <div id="page-content-wrapper" class="container p-3">
+        {% block dashboard_content %}{% endblock %}
     </div>
 </div>
 {% endblock %}

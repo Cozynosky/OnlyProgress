@@ -23,14 +23,14 @@ class BodyStats(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     age = models.IntegerField(null=True)
     
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
+@receiver(post_save, sender=Profile)
+def create_user_bodystats(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        BodyStats.objects.create(profile=instance)
         
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+@receiver(post_save, sender=Profile)
+def save_user_bodystats(sender, instance, **kwargs):
+    instance.bodystats.save()
 
 class WeightMeasurement(models.Model):
     value = models.IntegerField(help_text="Weight in kg")

@@ -7,6 +7,9 @@ name = "pypi"
 django = "*"
 gunicorn = "*"
 django-widget-tweaks = "*"
+pandas = "*"
+sklearn = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
