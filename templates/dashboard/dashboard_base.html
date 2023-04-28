@@ -6,12 +6,12 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light text-center">Start</div>
         <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'profile:dashboard_home' %}">Home</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'profile:dashboard_bodystats' %}">Body Stats</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'dashboard:home' %}">Home</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'dashboard:bodystats:show_latest' %}">Body Stats</a>
         </div>
     </div>
     <!-- Page content wrapper-->
-    <div id="page-content-wrapper" class="container p-3">
+    <div id="page-content-wrapper" class="container ">
         {% block dashboard_content %}{% endblock %}
     </div>
 </div>

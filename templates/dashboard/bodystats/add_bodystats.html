@@ -1,0 +1,6 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %} 
+    <h1>Add new stats</h1>
+    {% load widget_tweaks %}
+    {% include 'forms/default_form.html' with button_text='Add' %}
+{% endblock%}

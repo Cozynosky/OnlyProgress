@@ -10,6 +10,7 @@ django-widget-tweaks = "*"
 pandas = "*"
 sklearn = "*"
 scikit-learn = "*"
+django-bootstrap-datepicker-plus = "*"
 
 [dev-packages]
 

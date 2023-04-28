@@ -1,0 +1,28 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %}
+<h1>Bodystats - {{date}}</h1>
+<div class="row px-3">
+    <div class="col-12 col-sm-5 col-lg-4">
+    <a class="btn btn-primary" href="{% url 'dashboard:bodystats:add_bodystats'%}">Add bodystats</a><br>
+    {% for stat_name, stat_features in bodystats.items %}
+    <div class="d-flex border-bottom py-2">
+        <div class="text-capitalize stat-name">{{stat_name}}:</div>
+        <div>{{stat_features.val}} {{stat_features.unit}}</div> 
+        <div class="ms-auto">
+            {% if stat_features.change == "less" %}
+            <i class="fa-solid fa-down-long stat-less"></i>
+            {% elif stat_features.change == "more"%}
+            <i class="fa-solid fa-up-long stat-more"></i>
+            {% endif%}
+            <i class="fa-solid fa-chart-simple"></i>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <div class="col">
+        
+        {{bmi.val}}
+        {{bodyfat.val}}
+    </div>
+</div>
+{% endblock %}

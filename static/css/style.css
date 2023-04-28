@@ -51,6 +51,18 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     margin-left: 0;
 }
 
+.stat-name {
+    width: 80px;
+}
+
+.stat-less {
+    color: red;
+}
+
+.stat-more {
+    color: green;
+}
+
 @media (min-width: 768px) {
     #sidebar-wrapper {
         margin-left: 0;
