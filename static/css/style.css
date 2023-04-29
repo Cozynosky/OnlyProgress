@@ -55,12 +55,9 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     width: 80px;
 }
 
-.stat-less {
-    color: red;
-}
-
-.stat-more {
-    color: green;
+.rounded-val {
+    width: 230px;
+    height: 230px;
 }
 
 @media (min-width: 768px) {

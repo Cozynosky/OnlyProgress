@@ -6,6 +6,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    sex = models.IntegerField(help_text="Sex, 1 is man 0 is woman", null=True)
     
     def __str__(self) -> str:
         return super().__str__()

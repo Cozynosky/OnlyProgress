@@ -1,0 +1,78 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %}
+<div class="mb-3 text-center">
+    <h1 class="mb-0">History</h1>
+</div>
+<div class="row justify-content-center">
+    <div class="col col-xl-10 col-xxl-9">
+        <table class="table align-middle table-striped table-bordered mx-auto">
+            <thead>
+                <tr>
+                    <th class="col">Id</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Weight</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in stats %}
+                <tr>
+                    <td>{{tens|add:forloop.counter}}</td>
+                    <td>{{record.date|date:"d/m/Y"}}</td>
+                    <td>{{record.weight}} kg</td>
+                    <td class="text-end">
+                        <a class="btn btn-success"
+                            href="{% url 'dashboard:bodystats:show_bodystats' id=record.pk %}"><span
+                                class="d-none d-sm-inline me-2">Show</span><i class="fa-solid fa-eye"></i></a>
+                        <a class="btn btn-warning"
+                            href="{% url 'dashboard:bodystats:update_bodystats' id=record.pk %}"><span
+                                class="d-none d-sm-inline me-2">Update</span><i class="fa-solid fa-pen"></i></a>
+                        <a class="btn btn-danger"
+                            href="{% url 'dashboard:bodystats:delete_bodystats' id=record.pk %}"><span
+                                class="d-none d-sm-inline me-2">Delete</span><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if stats.has_other_pages %}
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+            <ul class="pagination">
+                {% if stats.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{% url 'dashboard:bodystats:show_history' page=stats.previous_page_number %}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+                {% endif %}
+
+                {% for i in stats.paginator.page_range %}
+                {% if stats.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link"
+                        href="{% url 'dashboard:bodystats:show_history' page=i %}">{{i}}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if stats.has_next %}   
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'dashboard:bodystats:show_history' page=stats.next_page_number %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock%}

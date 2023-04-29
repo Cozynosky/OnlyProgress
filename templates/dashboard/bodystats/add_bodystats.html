@@ -1,6 +1,8 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block dashboard_content %} 
-    <h1>Add new stats</h1>
+    <div class="mb-3 text-center">
+        <h1 class="mb-0">New Body Stats</h1>
+    </div>
     {% load widget_tweaks %}
-    {% include 'forms/default_form.html' with button_text='Add' %}
+    {% include 'forms/add_bodystats_form.html' with button_text='Add'%}
 {% endblock%}
