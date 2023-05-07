@@ -2,6 +2,24 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from profile.models import Profile
 
+UNITS = {
+    "age": "years",
+    "weight": "kg",
+    "height": "cm",
+    "neck": "cm",
+    "chest": "cm",
+    "abdomen": "cm",
+    "hip": "cm",
+    "thigh": "cm",
+    "knee": "cm",
+    "ankle": "cm",
+    "biceps": "cm",
+    "forearm": "cm",
+    "wrist": "cm",
+    "bmi": "",
+    "bodyfat": "%",
+}
+
 
 class BodyStats(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

@@ -11,6 +11,17 @@ pandas = "*"
 sklearn = "*"
 scikit-learn = "*"
 django-bootstrap-datepicker-plus = "*"
+django-mathfilters = "*"
+matplotlib = "*"
+seaborn = "*"
+lightgbm = "*"
+requests = "*"
+beautifulsoup4 = "*"
+opencv-python = "*"
+tensorflow = "*"
+keras = "*"
+pydot = "*"
+augmentor = "*"
 
 [dev-packages]
 

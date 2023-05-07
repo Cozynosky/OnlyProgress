@@ -2,8 +2,8 @@
 {% block dashboard_content %}
 {% if bodystats %}
     <div class="mb-3 text-center">
-        <h1 class="mb-0">Bodystats</h1>
-        <p>{{date}}</p>
+        <h1 class="mb-0">Body stats</h1>
+        <p>{{date|date:"d/m/Y - H:i"}}</p>
     </div>
     
     <div class="row px-3 justify-content-center">
@@ -30,20 +30,24 @@
         {% for stat_name, stat_features in bodystats.items %}
         <div class="d-flex border-bottom py-2">
             <div class="text-capitalize stat-name">{{stat_name}}:</div>
-            <div>{{stat_features.val}} {{stat_features.unit}}</div> 
+            <div>{{stat_features.val}} {{stat_features.unit}}</div>
+            {% if stat_name != "age" %}
             <div class="ms-auto">
                 {% if stat_features.change == "less" %}
                 <i class="fa-solid fa-down-long stat-less"></i>
                 {% elif stat_features.change == "more"%}
                 <i class="fa-solid fa-up-long stat-more"></i>
                 {% endif %}
-                <i class="fa-solid fa-chart-simple text-primary"></i>
+                
+                <a class="" href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=1%}"><i class="fa-solid fa-chart-simple text-primary"></i></a>
+                
             </div>
+            {% endif %}
         </div>
         {% endfor %}
         <div class="my-2 d-flex">
-            <a class="btn btn-success me-2" href="{% url 'dashboard:bodystats:add_bodystats' fill='false'%}">New<i class="fa-solid fa-plus ms-2"></i></a>
-            <a class="btn btn-warning me-2" href="{% url 'dashboard:bodystats:update_bodystats' id=id%}">Update<i class="fa-solid fa-pen ms-2"></i></a>
+            <a class="btn btn-success me-2" href="{% url 'dashboard:bodystats:add_bodystats' fill='false'%}">Update<i class="fa-solid fa-plus ms-2"></i></a>
+            <a class="btn btn-warning me-2" href="{% url 'dashboard:bodystats:edit_bodystats' id=id%}">Edit<i class="fa-solid fa-pen ms-2"></i></a>
             <a class="btn btn-secondary me-2" href="{% url 'dashboard:bodystats:show_history' page=1%}">History<i class="fa-solid fa-clock-rotate-left ms-2"></i></a>
         </div>
         </div>
@@ -53,7 +57,7 @@
 <div class="mb-3 text-center">
     <h1>Bodystats</h1>
     <h3>No data to show. Add some bodystats</h1>
-    <a class="btn btn-primary" href="{% url 'dashboard:bodystats:add_bodystats'%}">Add bodystats</a><br>
+    <a class="btn btn-primary" href="{% url 'dashboard:bodystats:add_bodystats' fill='false'%}">Add bodystats</a><br>
 </div>
 {% endif %}
 {% endblock %}

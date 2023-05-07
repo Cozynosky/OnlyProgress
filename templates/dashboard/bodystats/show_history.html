@@ -1,5 +1,6 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block dashboard_content %}
+{% load mathfilters %}
 <div class="mb-3 text-center">
     <h1 class="mb-0">History</h1>
 </div>
@@ -8,25 +9,29 @@
         <table class="table align-middle table-striped table-bordered mx-auto">
             <thead>
                 <tr>
-                    <th class="col">Id</th>
+                    <th class="col">#</th>
                     <th scope="col">Date</th>
                     <th scope="col">Weight</th>
+                    <th scope="col">BMI</th>
+                    <th scope="col">Body fat</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for record in stats %}
                 <tr>
-                    <td>{{tens|add:forloop.counter}}</td>
+                    <td>{{tens|sub:forloop.counter0}}</td>
                     <td>{{record.date|date:"d/m/Y"}}</td>
                     <td>{{record.weight}} kg</td>
+                    <td>{{record.bmi}}</td>
+                    <td>{{record.bodyfat}}%</td>
                     <td class="text-end">
                         <a class="btn btn-success"
                             href="{% url 'dashboard:bodystats:show_bodystats' id=record.pk %}"><span
                                 class="d-none d-sm-inline me-2">Show</span><i class="fa-solid fa-eye"></i></a>
                         <a class="btn btn-warning"
-                            href="{% url 'dashboard:bodystats:update_bodystats' id=record.pk %}"><span
-                                class="d-none d-sm-inline me-2">Update</span><i class="fa-solid fa-pen"></i></a>
+                            href="{% url 'dashboard:bodystats:edit_bodystats' id=record.pk %}"><span
+                                class="d-none d-sm-inline me-2">Edit</span><i class="fa-solid fa-pen"></i></a>
                         <a class="btn btn-danger"
                             href="{% url 'dashboard:bodystats:delete_bodystats' id=record.pk %}"><span
                                 class="d-none d-sm-inline me-2">Delete</span><i class="fa-solid fa-trash"></i></a>
@@ -73,6 +78,7 @@
             </ul>
         </nav>
         {% endif %}
+        <div class="text-center"><a class="btn btn-primary" href="{% url 'dashboard:bodystats:add_bodystats' fill='false'%}">Add body stats</a><br></div>
     </div>
 </div>
 {% endblock%}

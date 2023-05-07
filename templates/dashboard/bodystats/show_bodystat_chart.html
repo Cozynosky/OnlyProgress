@@ -1,0 +1,114 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %}
+<div class="mb-3 text-center">
+    <h1 class="mb-0 text-capitalize">{{stat_name}}</h1>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col mt-4">
+      <canvas class="w-100 h-auto" id="myChart"></canvas>
+    </div>
+    <div class="col-12 col-xl-4 col-xxl-4">
+        {% for date, val, pk in list_for_table %}
+        <div class="d-flex border-bottom py-2">
+          <div class="me-2 d-flex align-items-center">{{date|date:"d/m/Y"}}</div>
+          <div class="d-flex align-items-center">{{val}} {{unit}}</div>
+          <div class="ms-auto">
+            <a class="btn btn-success" href="{% url 'dashboard:bodystats:show_bodystats' id=pk %}">
+              <i class="fa-solid fa-eye"></i>
+            </a>
+            <a class="btn btn-warning" href="{% url 'dashboard:bodystats:edit_bodystats' id=pk %}">
+              <i class="fa-solid fa-pen"></i>
+            </a>
+            <a class="btn btn-danger" href="{% url 'dashboard:bodystats:delete_bodystats' id=pk %}">
+              <i class="fa-solid fa-trash"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+        {% if stats.has_other_pages %}
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+            <ul class="pagination">
+                {% if stats.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=stats.previous_page_number %}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+                {% endif %}
+
+                {% for i in stats.paginator.page_range %}
+                {% if stats.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link"
+                        href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=i %}">{{i}}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if stats.has_next %}   
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=stats.next_page_number %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    var labels = {{labels|safe}};
+    var data = {{data}};
+    var ylabel = "Value in ".concat("{{unit}}");
+  
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          borderWidth: 1,
+          tension: 0.5
+        }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display:false
+            }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            grace: '10%',
+            title: {
+                display: true,
+                text: ylabel
+            }
+          },
+          x: {
+            title: {
+                display: true,
+                text: "Measurement date"
+            }
+          }
+        }
+      }
+    });
+</script>
+{% endblock %}
