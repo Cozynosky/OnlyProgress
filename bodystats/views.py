@@ -3,13 +3,13 @@ from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 from django.utils.timezone import now
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from bodystats_predictor import (
-    predict_bodyfat,
+from bodystats_predictor.bodystats_operations import (
     calculate_bmi,
     get_weight_status,
     get_bodyfat_status,
     estimate_bodyfat,
 )
+from bodystats_predictor.predictors import predict_bodyfat
 from .forms import BodystatsForm
 from .models import BodyStats, UNITS
 
