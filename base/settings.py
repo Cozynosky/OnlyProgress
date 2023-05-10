@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'profile.apps.ProfileConfig',
     'bodystats.apps.BodystatsConfig',
-    'bodyfatpredictor.apps.BodyfatpredictorConfig',
+    'predictions.apps.PredictionsConfig',
     'dashboard.apps.DashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',

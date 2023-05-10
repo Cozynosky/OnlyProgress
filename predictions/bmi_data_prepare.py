@@ -344,10 +344,10 @@ def print_progress(process_name,curr, total):
    
 
 if __name__ == "__main__":
-    # collect_imgs_data()
-    # collect_vids_data()
-    # download_imgs()
-    # download_videos()
-    # make_photos_from_vids()
-    #crop_faces(0.1)
+    collect_imgs_data()
+    collect_vids_data()
+    download_imgs()
+    download_videos()
+    make_photos_from_vids()
+    crop_faces(0.1)
     augumente_data()

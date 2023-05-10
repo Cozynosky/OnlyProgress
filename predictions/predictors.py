@@ -5,9 +5,10 @@ import cv2
 import tensorflow as tf
 from decimal import Decimal
 from tensorflow import keras
+from PIL import Image
 
-from bodystats_operations import calculate_bmi
-from bmi_data_prepare import find_face, crop_image_to_dimensions
+from .bodystats_operations import calculate_bmi
+from .bmi_data_prepare import find_face, crop_image_to_dimensions
 
 PARENT = "D:/Projects/Magisterka/OnlyProgress/"
 #bodyfat_model_url = staticfiles_storage.path('data/bodyfat_model.pkl')
@@ -45,8 +46,31 @@ def predict_bodyfat(bodystats: dict) -> float:
     fat = ((4.95/density) - 4.5)*100
     return fat
 
-def predict_bmi():
-    pass
+def predict_bmi(input_img):
+    faces = find_face(input_img, 0.1)
+        
+    for (x1, y1, x2, y2) in faces:
+        cv2.rectangle(input_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+            
+        face = crop_image_to_dimensions(input_img, x1, y1, x2, y2)
+            
+        img = Image.fromarray(face, 'RGB')
+        img = img.resize((180, 180))
+            
+        img_array = np.array(img)
+        img_array = np.expand_dims(img_array, axis=0)
+            
+        predictions = bmi_model.predict(img_array, verbose=0)
+        score = tf.nn.softmax(predictions[0])
+            
+        text = f"{bmi_classes[np.argmax(score)]} with {round(100 * np.max(score), 2)}%"
+        font = cv2.FONT_HERSHEY_SIMPLEX
+            
+        input_img = cv2.putText(input_img, text, (x1, y1), font, 
+                   1, (0, 0, 255), 2, cv2.LINE_AA)
+    
+    return input_img
+    
 
 def predict_bmi_demo():
     
@@ -55,31 +79,7 @@ def predict_bmi_demo():
     while (True):
         ret, frame = vid.read()
         
-        faces = find_face(frame, 0.1)
-        
-        for (x1, y1, x2, y2) in faces:
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
-            
-            face = crop_image_to_dimensions(frame, x1, y1, x2, y2)
-            
-            cv2.imwrite(PARENT+"static/data/temp/temp_img.jpg", face)
-            
-            img = tf.keras.utils.load_img(
-                PARENT+"static/data/temp/temp_img.jpg", target_size=(180, 180)
-            )
-            
-            img_array = tf.keras.utils.img_to_array(img)
-            img_array = tf.expand_dims(img_array, 0) # Create a batch
-            
-            
-            predictions = bmi_model.predict(img_array, verbose=0)
-            score = tf.nn.softmax(predictions[0])
-            
-            text = f"{bmi_classes[np.argmax(score)]} with {round(100 * np.max(score), 2)}%"
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            
-            frame = cv2.putText(frame, text, (x1, y1), font, 
-                   1, (0, 0, 255), 2, cv2.LINE_AA)
+        frame = predict_bmi(frame)
   
         # Display the resulting frame
         cv2.imshow('frame', frame)
@@ -94,6 +94,4 @@ def predict_bmi_demo():
     vid.release()
     # Destroy all the windows
     cv2.destroyAllWindows()
-
-if __name__ == "__main__":
-    predict_bmi_demo()
+    
