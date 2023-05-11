@@ -1,4 +1,15 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block dashboard_content %} 
+<div class="mb-3 text-center">
+    <h1 class="mb-0">Face analysis</h1>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-6">
+        <img src="{% url 'dashboard:predictions:camera_feed' %}" class="w-100 rounded">
+    </div>
+    <div class="col-12">
+        <p>test</p>
+    </div>
+</div>
 
 {% endblock%}
