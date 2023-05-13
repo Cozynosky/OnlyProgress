@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'bodystats.apps.BodystatsConfig',
     'predictions.apps.PredictionsConfig',
     'dashboard.apps.DashboardConfig',
+    'workout.apps.WorkoutConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

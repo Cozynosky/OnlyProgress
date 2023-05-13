@@ -23,6 +23,7 @@ keras = "*"
 pydot = "*"
 augmentor = "*"
 cvzone = "*"
+mediapipe = "*"
 
 [dev-packages]
 
