@@ -7,8 +7,8 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
-PARENT = "D:/Projects/Magisterka/OnlyProgress/"
-INPUT_PATH = PARENT + "static/data/downloaded/cropped_faces/"
+PARENT = "home/cozy/Documents/Projects/Python/OnlyProgress/"
+INPUT_PATH = PARENT + "static/data/downloaded/cropped_faces/" 
 
 batch_size = 32
 img_height = 180

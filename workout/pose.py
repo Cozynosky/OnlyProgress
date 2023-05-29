@@ -66,6 +66,9 @@ class PoseDetector:
             min_tracking_confidence=self.trackCon,
         )
 
+        self.rep = 0
+        self.dir = 0
+
     def find_body_pose(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
@@ -124,6 +127,8 @@ class PoseDetector:
     def check_exercise_progress(self, img, bodypart1, bodypart2, bodypart3, startang, endang, draw=True):
         self.find_body_pose(img, False)
         self.find_landmarks(img, False)
+        cv2.putText(img, f'Reps: {int(self.rep)}', (0, 25), cv2.FONT_HERSHEY_PLAIN, 2,
+                    (0, 255, 0), 4)
         
         if len(self.landmarks) !=0:
             angle = self.find_angle(img,bodypart1, bodypart2, bodypart3)
@@ -131,13 +136,25 @@ class PoseDetector:
             
             if startang < endang:
                 per = 100 - per
+
+            if per == 100 and self.dir == 0:
+                self.rep += 0.5
+                self.dir = 1
+            elif per == 0 and self.dir == 1:
+                self.rep += 0.5
+                self.dir = 0
+        
+
+            cv2.putText(img, f'Progress {per}%', (0, 50), cv2.FONT_HERSHEY_PLAIN, 2,
+                        (0, 255, 0), 4)
+
+
             
-            cv2.putText(img, f'{per} %', (img.shape[1] - 150, img.shape[0] - 150), cv2.FONT_HERSHEY_PLAIN, 4,
-                    (0, 255, 0), 4)
     
 def live_demo():
     cap = cv2.VideoCapture(0)
     detector = PoseDetector()
+
 
     while True:
         succ, frame = cap.read()

@@ -7,7 +7,7 @@ import cv2
 
 from bs4 import BeautifulSoup
 
-PARENT = "D:/Projects/Magisterka/OnlyProgress/"
+PARENT = "/home/cozy/Documents/Projects/Python/OnlyProgress/"
 PATH_TO_STATIC = "static/data/"
 PATH_TO_CSV = PARENT + PATH_TO_STATIC+"datasets/"
 PATH_TO_DOWNLOADED = PARENT + PATH_TO_STATIC + "downloaded/"
