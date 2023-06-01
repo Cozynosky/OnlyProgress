@@ -1,0 +1,48 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %}
+<div class="mb-3 d-flex">
+    <div class="border rounded p-3 m-auto">
+        <h1 class="m-3">{{exercise.name}} Training</h1>
+        {% load widget_tweaks %}
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for error in form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% for field in form.visible_fields %}
+            <div class="form-group mb-3">
+                {{ field.label_tag }}
+
+                {% if form.is_bound %}
+                {% if field.errors %}
+                {% render_field field class="form-control is-invalid" %}
+                {% for error in field.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% else %}
+                {% render_field field class="form-control is-valid" %}
+                {% endif %}
+                {% else %}
+                {% render_field field class="form-control" %}
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="d-grid">
+                <button class="btn btn-success btn-lg mb-3" type="submit" name="DONE">Done<i class="fa-solid fa-check ms-2"></i></button>
+                <button class="btn btn-primary btn-lg" type="submit" name="DO_WITH_AI">Do with Trainer<i class="fa-solid fa-dumbbell ms-2"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock%}

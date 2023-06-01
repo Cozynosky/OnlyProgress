@@ -10,7 +10,7 @@ from PIL import Image
 from .bodystats_operations import calculate_bmi
 from .bmi_data_prepare import find_face, crop_image_to_dimensions
 
-PARENT = "/home/cozy/Documents/Projects/Python/OnlyProgress/"
+PARENT = "D:/Projects/Magisterka/OnlyProgress/"
 #bodyfat_model_url = staticfiles_storage.path('data/bodyfat_model.pkl')
 bodyfat_model = pickle.load(open(PARENT+"static/data/bodyfat_model.pkl","rb"))
 #transformer_url = staticfiles_storage.url('data/transformer.pkl')

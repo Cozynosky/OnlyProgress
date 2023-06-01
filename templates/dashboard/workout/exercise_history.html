@@ -1,0 +1,124 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %} 
+<div class="mb-3 text-center">
+    <h1 class="mb-0 text-capitalize">{{exercise.name}}</h1>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col mt-4">
+        <canvas class="w-100 h-auto" id="myChart"></canvas>
+    </div>
+    <div class="col-12 col-xl-4 col-xxl-4">
+        <table class="table align-middle table-striped table-bordered mx-auto">
+            <thead>
+                <tr>
+                    <th class="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Sets</th>
+                    <th scope="col">Reps</th>
+
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for workout in workouts %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{workout.date|date:"d/m/Y"}}</td>
+                    <td>{{workout.sets}}</td>
+                    <td>{{workout.reps}}</td>
+                    <td class="text-end">
+                        <a class="btn btn-warning"
+                            href=""><i class="fa-solid fa-pen"></i></a>
+                        <a class="btn btn-danger"
+                            href=""><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if workouts.has_other_pages %}
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+            <ul class="pagination">
+                {% if stats.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=stats.previous_page_number %}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+                {% endif %}
+
+                {% for i in stats.paginator.page_range %}
+                {% if stats.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link"
+                        href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=i %}">{{i}}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if stats.has_next %}   
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'dashboard:bodystats:show_chart' stat_name=stat_name page=stats.next_page_number %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock%}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    var labels = {{labels|safe}};
+    var data = {{reps}};
+    var ylabel = "Reps";
+  
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          borderWidth: 1,
+          tension: 0.5
+        }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display:false
+            }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            grace: '10%',
+            title: {
+                display: true,
+                text: ylabel
+            }
+          },
+          x: {
+            title: {
+                display: true,
+                text: "Training date"
+            }
+          }
+        }
+      }
+    });
+</script>
+{% endblock %}

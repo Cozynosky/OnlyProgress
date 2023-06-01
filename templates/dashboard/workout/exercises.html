@@ -1,0 +1,25 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block dashboard_content %} 
+<div class="mb-3 text-center">
+    <h1 class="mb-0">{{Exercises}}</h1>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12">
+        <a href="#" class="btn btn-primary">All workouts<i class="fa-regular fa-calendar ms-2"></i></a>
+    </div>
+    {% for exercise in exercises %}
+    <div class="col-12 col-md-9 col-xl-5 bg-dark text-white row m-3 rounded">
+        <div class="col m-0 py-3 h-100">
+            <img src="{{exercise.img_url}}" class="h-100 w-100 rounded object-fit-cover">
+        </div>
+        <div class="col py-3">
+            <h4 class="text-center">{{exercise.name}}</h4>
+            <p>{{exercise.desc}}</p>
+            <a href="{% url 'dashboard:workout:add_training' exercise_id=exercise.pk %}" class="btn btn-warning">Train<i class="fa-solid fa-dumbbell ms-2"></i></a>
+            <a class="btn btn-secondary" href="{% url 'dashboard:workout:exercise_history' exercise_id=exercise.pk page=1 %}">History<i class="fa-solid fa-clock-rotate-left ms-2"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock%}
