@@ -14,7 +14,7 @@ class VideoCamera(object):
     
     def __init__(self, bodypart_a, bodypart_b, bodypart_c, start_angle, end_angle, reps) -> None:
         self.video = cv2.VideoCapture(0)
-        self.pose_detector = PoseDetector()
+        self.pose_detector = PoseDetector(reps_to_do=reps)
         self.bodypart_a = bodypart_a
         self.bodypart_b = bodypart_b
         self.bodypart_c = bodypart_c
@@ -29,8 +29,6 @@ class VideoCamera(object):
         success, image = self.video.read()
         self.pose_detector.check_exercise_progress(image, self.bodypart_a, self.bodypart_b, self.bodypart_c, self.start_angle, self.end_angle)
         
-        # cv2.putText(img, f'{per} %', (img.shape[1] - 150, img.shape[0] - 150), cv2.FONT_HERSHEY_PLAIN, 4,
-        #             (0, 255, 0), 4)
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
@@ -85,7 +83,7 @@ def add_training_view(request, exercise_id):
                     workout.sets = workout.sets + 1
                     workout.save()
                     
-                return redirect("dashboard:workout:add_training", exercise_id=exercise_id)
+                return redirect("dashboard:workout:exercise_history", exercise_id=exercise_id, page=1)
             else:
                 context = {
                 'exercise':exercise,

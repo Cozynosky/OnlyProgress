@@ -7,7 +7,7 @@ import cv2
 
 from bs4 import BeautifulSoup
 
-PARENT = "/home/cozy/Documents/Projects/Python/OnlyProgress/"
+PARENT = "D:/Projects/Magisterka/OnlyProgress/"
 PATH_TO_STATIC = "static/data/"
 PATH_TO_CSV = PARENT + PATH_TO_STATIC+"datasets/"
 PATH_TO_DOWNLOADED = PARENT + PATH_TO_STATIC + "downloaded/"
@@ -294,10 +294,6 @@ def find_face(img, margin):
         y2 = y + h + margin_y
         
         results.append((x1, y1, x2, y2))
-    #     cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
-        
-    # cv2.imshow("test", img)
-    # cv2.waitKey(0)
     
     return results
   
@@ -344,8 +340,8 @@ def print_progress(process_name,curr, total):
    
 
 if __name__ == "__main__":
-    collect_imgs_data()
-    collect_vids_data()
+    #collect_imgs_data()
+    #collect_vids_data()
     download_imgs()
     download_videos()
     make_photos_from_vids()
